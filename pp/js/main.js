@@ -1,0 +1,201 @@
+$(function(){
+    // 모든 a태그의 기본 속성 막기
+    $("a").click(function(e){
+        e.preventDefault();
+    });
+    // 화면 scroll에 따른 header 위치 변경
+    // 윈도우 객체에 스크롤 이벤트 설정
+    $(window).scroll(function(){
+        let winTop = $(this).scrollTop();
+        if(winTop >= 300){
+            $("header").addClass("sticky");
+            $(".search-area").addClass("sticky");
+        } else {
+            $("header").removeClass("sticky");  
+            $(".search-area").removeClass("sticky");
+        };        
+    });
+    // 메뉴 아이콘을 클릭하면 .sitemap영역이 나타남
+    $(".menu-btn").click(function(){
+        $(".sitemap").fadeIn(200);
+        $("html, body").css("overflow", "hidden");
+    });
+    // .sitemap영역의 close 버튼을 클릭하면 .sitemap영역 사라짐
+    $(".close-btn").click(function(){
+        $(".sitemap").fadeOut(200);
+        $("html, body").css("overflow", "auto");
+    });
+    // .sitemap-bg 영역을 클릭하면 .sitemap영역 사라짐
+    $(".sitemap-bg").click(function(){
+        $(".sitemap").fadeOut(200);
+        $("html, body").css("overflow", "auto");
+    });
+    // .sitemap영역 안의 메뉴 옆의 -버튼을 클릭하면 서브메뉴 사라지고, +버튼을 클릭하면 서브메뉴 나타남
+    $(".menu2 > ul > li > a i").click(function(){
+       $(this).find(".bar2").toggle();
+       $(this).parents("li").find(".sub").slideToggle();
+    });
+
+    // SNS 아이콘에 마우스 오버 시 SNS 아이콘의 색 변경
+    $(".sns ul li:first-child a").hover(function(){
+        $(".sns ul li:first-child a svg").css("fill","#ffffff");
+        $(this).css("background-color","#3B5998");
+    }, function(){
+        $(".sns ul li:first-child a svg").css("fill","#111111");
+        $(this).css("background-color","#eeeeee");
+    });
+    $(".sns ul li:nth-child(2) a").hover(function(){
+        $(".sns ul li:nth-child(2) a svg").css("fill","#ffffff");
+        $(this).css("background","radial-gradient(circle farthest-corner at 32% 106%,#ffe17d 0%,#ffcd69 10%,#fa9137 28%,#eb4141 42%,transparent 82%) , linear-gradient(135deg,#234bd7 12%,#c33cbe 58%)");
+    }, function(){
+        $(".sns ul li:nth-child(2) a svg").css("fill","#111111");
+        $(this).css("background","#eeeeee");
+    });
+    $(".sns ul li:nth-child(3) a").hover(function(){
+        $(".sns ul li:nth-child(3) a svg").css("fill","#ffffff");
+        $(this).css("background-color","#C4302B");
+    }, function(){
+        $(".sns ul li:nth-child(3) a svg").css("fill","#111111");
+        $(this).css("background-color","#eeeeee");
+    });
+    $(".sns ul li:nth-child(4) a").hover(function(){
+        $(".sns ul li:nth-child(4) a svg").css("fill","#ffffff");
+        $(this).css("background-color","#6552ED");
+    }, function(){
+        $(".sns ul li:nth-child(4) a svg").css("fill","#111111");
+        $(this).css("background-color","#eeeeee");
+    });
+    $(".sns ul li:last-child a").hover(function(){
+        $(".sns ul li:last-child a svg").css("fill","#ffffff");
+        $(this).css("background-color","#111111");
+    }, function(){
+        $(".sns ul li:last-child a svg").css("fill","#111111");
+        $(this).css("background-color","#eeeeee");
+    });
+
+    // header의 검색 버튼을 클릭하면 .search-area영역 나타남
+    let sw=0;
+    $(".member ul li:last").click(function(){
+        if(sw == 0){
+            sw=1;
+            $(this).find(".search-icon").hide();
+            $(this).find(".close-icon").show();
+            $(".search-area").fadeIn(200);
+            $("html, body").css("overflow", "hidden");
+        }else{
+            sw=0;
+            $(this).find(".search-icon").show();
+            $(this).find(".close-icon").hide();
+            $(".search-area").fadeOut(200);
+            $("html, body").css("overflow", "auto");
+        }
+        $(".search-bg").click(function(){
+            sw=0;
+            $(".member ul li:last").find(".search-icon").show();
+            $(".member ul li:last").find(".close-icon").hide();
+            $(".search-area").fadeOut(200);
+            $("html, body").css("overflow", "auto");
+        });
+    });
+    // .input-area의 input에 포커스가 이동하면 .input-area의 테두리 진하게 하기
+    // "focus" <-> "focusout"
+    $(".input-area input").on("focus", function(){
+        $(".input-area").css("border","1px solid #333"); 
+    });
+    // .input-area의 input에 포커스가 아웃하면 .input-area의 테두리 흐리게 하기
+    // focus <-> blur
+    $(".input-area input").blur(function(){
+        $(".input-area").css("border","1px solid #ddd");
+    });
+
+    // main swiper slide
+    let swiper = new Swiper(".mainSwiper", {
+        effect:"fade",
+        fadeEffect:{
+            crossFade:true
+        },
+        // 5000ms의 autoplay 진행률이 pagination에 표시됨
+        watchSlidesProgress:true,
+        loop:true,
+        autoplay:{
+            delay:5000
+        },
+        // 화면 전환속도
+        speed:500,
+        pagination:{
+            el:".swiper-pagination",
+            clickable:true,
+            type:"bullets",
+            renderBullet:function(index, className){
+                return '<span class="' + className + '"><i></i><b></b></span>';
+            }
+        },
+        navigation:{
+            nextEl:".swiper-button-next",
+            prevEl:".swiper-button-prev"
+        }
+    });
+
+    // scrollTrigger(section.s2)
+    ScrollTrigger.create({
+        trigger:".s2 .left-con",
+        // .left-con의 top에 도달하면 시작하며 뷰포트의 시작지점도 top
+        // 뷰포트가 끝까지 내려가면 끝
+        start:"top 30px",
+        // .left-con의 end에 도달하면 시작하면 뷰포트의 top지점에 도착하면 끝
+        end:"bottom top",
+        pin:".s2 .left-con",
+        scrup:2
+    });
+
+    // section.s3
+    var gallerySlide = new Swiper(".gallerySlide", {
+        slidesPerView:"auto",
+        spaceBetween:24,
+        speed:1000,
+        scrollbar: {
+          el: ".swiper-scrollbar",
+        },
+    });
+
+    // scrollTrigger(section.s5)
+    ScrollTrigger.create({
+        trigger:".s5 .left-con",
+        // .left-con의 top에 도달하면 시작하며 뷰포트의 시작지점도 top
+        // 뷰포트가 끝까지 내려가면 끝
+        start:"top 30px",
+        // .left-con의 end에 도달하면 싲가하면 뷰포트의 top지점에 도착하면 끝
+        end:"bottom top",
+        pin:".s5 .left-con",
+        scrup:2
+    });
+
+    // family site
+    let sw2 = 0;
+    $(".family > a").click(function(e){
+        e.preventDefault();
+        if(sw2 == 0){
+            sw2 = 1;
+            $(this).find("span").css("transform","rotateX(0)");
+            $(this).parent().find(".sub").slideDown();
+        } else {
+            sw2 = 0;
+            $(this).find("span").css("transform","rotateX(180deg)");
+            $(this).parent().find(".sub").slideUp();
+        }
+    });
+    // mouseover, mouseout은 자식요소에 접근했을때 인식되지만
+    // mouseenter, mouseleave는 자식요소에 접근했을때 호출되지 않는다.
+    $(".family").mouseleave(function(){
+        if(sw2 == 1){
+            sw2 = 0;
+            $(this).find("span").css("transform","rotateX(180deg)");
+            $(this).find(".sub").slideUp();
+        }
+    });
+
+    // top버튼
+    $(".top").click(function(){
+        $("html, body").animate({scrollTop:0}, 1000);
+    });
+});
