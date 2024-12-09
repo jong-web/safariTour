@@ -1,8 +1,29 @@
 $(function(){
-    // 모든 a태그의 기본 속성 막기
-    $("a").click(function(e){
+    // a태그의 기본 속성 막기
+    $("section a, footer a, .sitemap a, .menu-btn a, .member a, .navi-area nav a, .menu-btn a, .member a").click(function(e){
         e.preventDefault();
     });
+    $("#birds").click(function(){
+        let offset = $(".s2").offset().top-100;
+        $("html, body").animate({scrollTop: offset}, 500);
+    });
+    $("#herbivorous").click(function(){
+        let offset = $(".s3").offset().top-100;
+        $("html, body").animate({scrollTop: offset}, 500);
+    });
+    $("#meat").click(function(){
+        let offset = $(".s4").offset().top-100;
+        $("html, body").animate({scrollTop: offset}, 500);
+    });
+    $("#bigfive").click(function(){
+        let offset = $(".s5").offset().top-100;
+        $("html, body").animate({scrollTop: offset}, 500);
+    });
+    $("#etc").click(function(){
+        let offset = $(".s6").offset().top-100;
+        $("html, body").animate({scrollTop: offset}, 500);
+    });
+
     // 화면 scroll에 따른 header 위치 변경
     // 윈도우 객체에 스크롤 이벤트 설정
     $(window).scroll(function(){
